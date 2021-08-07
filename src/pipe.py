@@ -9,4 +9,13 @@ class Pipe:
         self.top_rect = top_rect
         self.bottom_rect = bottom_rect
 
+    
+    def hits(self, rect, circle):
+        if rect.contains(circle.point):
+            return True
+
+        dist = (rect.center() - circle.point).abs()
+
+        return (dist.x <= rect.dim.width + circle.radius) and (dist.y <= rect.dim.height + circle.radius) and \
+        ((dist.x - rect.dim.width)**2 + (dist.y - rect.dim.height)**2 <= circle.radius**2)
         
