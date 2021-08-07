@@ -13,6 +13,46 @@ class Point:
 
     def distance(self, point):
         return ((self.x - point.x)**2 + (self.y - point.y)**2)**0.5
+    
+
+    def abs(self):
+        return Point(abs(self.x), abs(self.y))
+
+
+    def __iadd__(self, point):
+        self.x += point.x
+        self.y += point.y
+
+
+    def __add__(self, point):
+        return Point(self.x + point.x, self.y + point.y)
+    
+
+    def __isub__(self, point):
+        self.x -= point.x
+        self.y -= point.y
+    
+
+    def __sub__(self, point):
+        return Point(self.x - point.x, self.y - point.y)
+    
+
+    def __imul__(self, point):
+        self.x *= point.x
+        self.y *= point.y
+
+
+    def __mul__(self, point):
+        return Point(self.x * point.x, self.y * point.y)
+
+    
+    def __idiv__(self, point):
+        self.x /= point.x
+        self.y /= point.y
+
+    
+    def __div__(self, point):
+        return Point(self.x / point.x, self.y / point.y)
 
 
 class Dim:
@@ -41,14 +81,14 @@ class Rect:
 
     def max_y(self):
         return (self.point.y + self.dim.height)
+    
+
+    def center(self):
+        return Point(self.point.x + self.dim.width // 2, self.point.y + self.dim.height // 2)
 
 
-    def inside(self, point):
+    def contains(self, point):
         return (self.point.x <= point.x <= self.max_x() and self.point.y <= point.y <= self.max_y())
-
-
-    def corners(self):
-        return [self.point.copy(), Point(self.max_x(), self.point.y), Point(self.max_x(), self.max_y()), Point(self.point.x, self.max_y())]
 
 
 class Circle:
@@ -77,6 +117,6 @@ class Circle:
         return (self.point.y + self.radius)
     
 
-    def inside(self, point):
+    def contains(self, point):
         return (self.point.x - point.x)**2 + (self.point.y - point.y)**2 <= self.radius**2
     
