@@ -15,6 +15,10 @@ class Point:
         return ((self.x - point.x)**2 + (self.y - point.y)**2)**0.5
     
 
+    def as_tuple(self):
+        return (self.x, self.y)
+
+
     def abs(self):
         return Point(abs(self.x), abs(self.y))
 
@@ -63,6 +67,10 @@ class Dim:
     
     def copy(self):
         return Dim(self.width, self.height)
+    
+
+    def as_tuple(self):
+        return (self.width, self.height)
     
 
 class Rect:
