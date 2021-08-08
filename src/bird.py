@@ -2,10 +2,11 @@ from utils import Point
 
 
 class Bird:
-    def __init__(self, circle, alive=True, y_velocity=0):
+    def __init__(self, circle, alive=True, velocity=0):
         self.circle = circle
-        self.y_velocity = y_velocity
+        self.velocity = velocity
         self.alive = alive
+        self.score = 0
         self.nn = None
     
 
