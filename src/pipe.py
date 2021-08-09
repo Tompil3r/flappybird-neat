@@ -19,7 +19,7 @@ class Pipe:
         dist = (rect.center() - circle.point).abs()
 
         return (dist.x <= rect.dim.width + circle.radius) and (dist.y <= rect.dim.height + circle.radius) and \
-        ((dist.x - rect.dim.width)**2 + (dist.y - rect.dim.height)**2 <= circle.radius**2)
+        ((dist.x - rect.dim.width//2)**2 + (dist.y - rect.dim.height//2)**2 <= circle.radius**2)
         
 
     def hits_pipe(self, circle):
