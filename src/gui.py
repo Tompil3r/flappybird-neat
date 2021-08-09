@@ -34,6 +34,7 @@ class FlappyBirdGUI:
         
         self.draw_background()
         self.draw_birds()
+        self.draw_pipes()
         pygame.display.update()
 
         self.timer = time.perf_counter()
@@ -55,8 +56,11 @@ class FlappyBirdGUI:
             pygame.draw.circle(self.window, self.bird_color, bird.circle.point.as_tuple(), bird.circle.radius)
         
     
-    def draw_pipes(self, pipes):
-        pass
+    def draw_pipes(self):
+        for pipe in self.env.pipes:
+            pygame.draw.rect(self.window, self.pipe_color, pipe.top_rect.as_tuple())
+            pygame.draw.rect(self.window, self.pipe_color, pipe.bottom_rect.as_tuple())
+
 
 
     def reset(self):
