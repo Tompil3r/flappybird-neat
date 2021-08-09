@@ -11,4 +11,4 @@ class Bird:
     
 
     def move(self):
-        self.circle.point.y += self.y_velocity
+        self.circle.point.y += self.velocity
