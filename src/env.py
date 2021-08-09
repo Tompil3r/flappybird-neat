@@ -46,6 +46,10 @@ class FlappyBirdEnv:
             self.destroy_pipes()
             self.generate_pipes()
             self.kill_birds(self.find_next_pipe())
+            return False # done
+
+        else:
+            return True # done
 
     
     def sample_action(self):
