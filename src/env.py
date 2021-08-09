@@ -33,10 +33,11 @@ class FlappyBirdEnv:
         self.birds_pipe_gap = 400
 
         self.birds_alive = None
+        self.gui_secs_delay = 0.01
 
         self.birds = None
         self.pipes = None
-        self.gui = FlappyBirdGUI(self)
+        self.gui = FlappyBirdGUI(self, self.gui_secs_delay)
     
 
     def step(self, actions):

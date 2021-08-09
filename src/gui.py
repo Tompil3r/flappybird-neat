@@ -6,7 +6,7 @@ import time
 
 
 class FlappyBirdGUI:
-    def __init__(self, env):
+    def __init__(self, env, update_secs_delay):
         self.rect = env.rect.copy()
 
         self.background_color = (135, 206, 235)
@@ -14,7 +14,7 @@ class FlappyBirdGUI:
         self.pipe_color = (113, 191, 46)
 
         self.timer = None
-        self.update_secs_delay = .01
+        self.update_secs_delay = update_secs_delay
 
         pygame.init()
         
