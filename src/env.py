@@ -13,10 +13,10 @@ class FlappyBirdEnv:
     def __init__(self, population):
         self.population = population
         
-        self.dim = Dim(800, 800)
+        self.rect = Rect(Point(0, 0), Dim(800, 800))
 
         self.bird_radius = 20
-        self.birds_start_point = Point(self.dim.width // 4, self.dim.height // 2)
+        self.birds_start_point = Point(self.rect.dim.width // 4, self.rect.dim.height // 2)
 
         self.no_action = 0
         self.jump_action = 1
@@ -29,23 +29,19 @@ class FlappyBirdEnv:
 
         self.pipe_width = 80
         self.pipe_gap = 150
-        self.gap_between_pipes = 200
+        self.gap_between_pipes = 400
         self.birds_pipe_gap = 400
 
         self.birds = None
         self.pipes = None
-        self.next_pipe = None
         self.gui = FlappyBirdGUI(self)
     
 
     def step(self, actions):
-        for idx, bird in enumerate(self.birds):
-            if actions[idx] == self.no_action:
-                bird.velocity += self.gravity
-            elif actions[idx] == self.jump_action:
-                bird.velocity = self.jump_velocity
-
-            bird.move()
+        self.move_birds(actions)
+        self.move_pipes()
+        self.generate_pipes()
+        self.kill_birds(self.find_next_pipe())
 
     
     def sample_action(self):
@@ -66,14 +62,43 @@ class FlappyBirdEnv:
         else:
             pipe_x = self.pipes[-1].get_x() + self.gap_between_pipes
         
-        while pipe_x < self.dim.width:
-            top_rect_height = random.randint(0, self.dim.height - self.pipe_gap)
+        while pipe_x < self.rect.dim.width:
+            top_rect_height = random.randint(0, self.rect.dim.height - self.pipe_gap)
             top_rect = Rect(Point(pipe_x, 0), Dim(self.pipe_width, top_rect_height))
-            bottom_rect = Rect(Point(pipe_x, top_rect_height + self.pipe_gap), Dim(self.pipe_width, self.dim.height - top_rect_height - self.pipe_gap))
+            bottom_rect = Rect(Point(pipe_x, top_rect_height + self.pipe_gap), Dim(self.pipe_width, self.rect.dim.height - top_rect_height - self.pipe_gap))
 
             self.pipes.append(Pipe(top_rect, bottom_rect))
 
             pipe_x += self.pipe_width + self.gap_between_pipes
+
+
+    def move_birds(self, actions):
+        for action,bird in zip(actions, self.birds):
+            if action == self.no_action:
+                bird.velocity += self.gravity
+            elif action == self.jump_action:
+                bird.velocity = self.jump_velocity
+            
+            bird.move()
+
+
+    def move_pipes(self):
+        for pipe in self.pipes:
+            pipe.move(self.world_velocity)
+
+
+    def find_next_pipe(self):
+        for pipe in self.pipes:
+            if pipe.get_x() + self.pipe_width < self.birds_start_point.x:
+                continue
+            else:
+                return pipe
+
+
+    def kill_birds(self, next_pipe):
+        for bird in self.birds:
+            if not bird.inside(self.rect) or next_pipe.hits_pipe(bird.circle):
+                bird.alive = False
 
     
     def reset(self):
