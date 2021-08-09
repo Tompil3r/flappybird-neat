@@ -33,3 +33,7 @@ class Pipe:
     
     def get_x(self):
         return self.top_rect.point.x
+    
+
+    def __str__(self):
+        return f'Pipe[top_rect={self.top_rect}, bottom_rect={self.bottom_rect}]'

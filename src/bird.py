@@ -19,3 +19,7 @@ class Bird:
         or self.circle.point.x + self.circle.radius >= rect.point.x + rect.dim.width
         or self.circle.point.y - self.circle.radius < rect.point.y
         or self.circle.point.y + self.circle.radius >= rect.point.y + rect.dim.height)
+    
+
+    def __str__(self):
+        return f'Bird[circle={self.circle}, velocity={self.velocity}, alive={self.alive}, score={self.score}]'

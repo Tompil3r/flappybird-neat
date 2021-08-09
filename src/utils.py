@@ -57,6 +57,10 @@ class Point:
     
     def __div__(self, point):
         return Point(self.x / point.x, self.y / point.y)
+    
+
+    def __str__(self):
+        return f'({self.x}, {self.y})'
 
 
 class Dim:
@@ -72,6 +76,10 @@ class Dim:
     def as_tuple(self):
         return (self.width, self.height)
     
+
+    def __str__(self):
+        return f'({self.width}, {self.height})'
+
 
 class Rect:
     def __init__(self, point, dim):
@@ -101,6 +109,10 @@ class Rect:
 
     def as_tuple(self):
         return (self.point.x, self.point.y, self.dim.width, self.dim.height)
+    
+
+    def __str__(self):
+        return f'(point={self.point}, dim={self.dim})'
 
 
 class Circle:
@@ -132,3 +144,6 @@ class Circle:
     def contains(self, point):
         return (self.point.x - point.x)**2 + (self.point.y - point.y)**2 <= self.radius**2
     
+
+    def __str__(self):
+        return f'(point={self.point}, radius={self.radius})'
