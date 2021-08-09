@@ -12,3 +12,10 @@ class Bird:
 
     def move(self):
         self.circle.point.y += self.velocity
+    
+
+    def inside(self, rect):
+        return not (self.circle.point.x - self.circle.radius < rect.point.x
+        or self.circle.point.x + self.circle.radius >= rect.point.x + rect.dim.width
+        or self.circle.point.y - self.circle.radius < rect.point.y
+        or self.circle.point.y + self.circle.radius >= rect.point.y + rect.dim.height)
