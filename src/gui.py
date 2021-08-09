@@ -7,7 +7,7 @@ import time
 
 class FlappyBirdGUI:
     def __init__(self, env):
-        self.dim = env.dim.copy()
+        self.rect = env.rect.copy()
 
         self.background_color = (135, 206, 235)
         self.bird_color = (212, 172, 87)
@@ -30,7 +30,7 @@ class FlappyBirdGUI:
                 pygame.time.delay(int(self.update_secs_delay*1000 - time_diff*1000))
         
         if self.window is None:
-            self.window = pygame.display.set_mode(self.dim.as_tuple())
+            self.window = pygame.display.set_mode(self.rect.dim.as_tuple())
         
         self.draw_background()
         self.draw_birds()
@@ -48,7 +48,7 @@ class FlappyBirdGUI:
 
 
     def draw_background(self):
-        pygame.draw.rect(self.window, self.background_color, [0, 0, self.dim.width, self.dim.height])
+        pygame.draw.rect(self.window, self.background_color, self.rect.as_tuple())
     
 
     def draw_birds(self):
