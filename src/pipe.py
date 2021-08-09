@@ -6,6 +6,8 @@ class Pipe:
     '''
 
     def __init__(self, top_rect, bottom_rect):
+        assert top_rect.point.x == bottom_rect.point.x
+
         self.top_rect = top_rect
         self.bottom_rect = bottom_rect
 
@@ -22,3 +24,7 @@ class Pipe:
 
     def hits(self, circle):
         return self.hits(self.top_rect, circle) or self.hits(self.bottom_rect, circle)
+
+    
+    def get_x(self):
+        return self.top_rect.point.x
