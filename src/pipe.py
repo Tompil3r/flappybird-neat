@@ -25,6 +25,11 @@ class Pipe:
     def hits(self, circle):
         return self.hits(self.top_rect, circle) or self.hits(self.bottom_rect, circle)
 
+
+    def move(self, delta):
+        self.top_rect.point.x += delta
+        self.bottom_rect.point.x += delta
+        
     
     def get_x(self):
         return self.top_rect.point.x
