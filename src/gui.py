@@ -53,7 +53,8 @@ class FlappyBirdGUI:
 
     def draw_birds(self):
         for bird in self.env.birds:
-            pygame.draw.circle(self.window, self.bird_color, bird.circle.point.as_tuple(), bird.circle.radius)
+            if bird.alive:
+                pygame.draw.circle(self.window, self.bird_color, bird.circle.point.as_tuple(), bird.circle.radius)
         
     
     def draw_pipes(self):
