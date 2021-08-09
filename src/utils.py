@@ -97,6 +97,10 @@ class Rect:
 
     def contains(self, point):
         return (self.point.x <= point.x <= self.max_x() and self.point.y <= point.y <= self.max_y())
+    
+
+    def as_tuple(self):
+        return (self.point.x, self.point.y, self.dim.width, self.dim.height)
 
 
 class Circle:
