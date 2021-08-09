@@ -22,7 +22,7 @@ class Pipe:
         ((dist.x - rect.dim.width)**2 + (dist.y - rect.dim.height)**2 <= circle.radius**2)
         
 
-    def hits(self, circle):
+    def hits_pipe(self, circle):
         return self.hits(self.top_rect, circle) or self.hits(self.bottom_rect, circle)
 
 
