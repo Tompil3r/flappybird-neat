@@ -71,7 +71,7 @@ class FlappyBirdEnv:
         return bird_states
 
     
-    def add_birds_score(self):
+    def add_bird_scores(self):
         for bird in self.birds:
             if bird.alive:
                 bird.score += 1
