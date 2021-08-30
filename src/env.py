@@ -87,7 +87,7 @@ class FlappyBirdEnv:
 
 
     def get_birds_score(self):
-        [bird.score for bird in self.birds]
+        return [bird.score for bird in self.birds]
 
 
     def update_birds(self, next_pipe):
