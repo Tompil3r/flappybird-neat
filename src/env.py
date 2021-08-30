@@ -20,6 +20,7 @@ class FlappyBirdEnv:
 
         self.no_action = 0
         self.jump_action = 1
+        self.action_prob = 0.5
 
         self.nb_actions = 2
 
@@ -40,9 +41,9 @@ class FlappyBirdEnv:
         self.gui = FlappyBirdGUI(self, self.gui_secs_delay)
     
 
-    def step(self, actions):
+    def step(self, actions, probability_actions=True):
         if self.birds_alive:
-            self.move_birds(actions)
+            self.move_birds(actions, probability_actions)
             self.move_pipes()
             self.destroy_pipes()
             self.generate_pipes()
@@ -85,14 +86,24 @@ class FlappyBirdEnv:
         self.pipes = [pipe for pipe in self.pipes if not (pipe.get_x() + self.pipe_width < self.rect.point.x)]
 
 
-    def move_birds(self, actions):
-        for action,bird in zip(actions, self.birds):
-            if action == self.no_action:
-                bird.velocity += self.gravity
-            elif action == self.jump_action:
-                bird.velocity = self.jump_velocity
-            
-            bird.move()
+    def move_birds(self, actions, probability_actions):
+        if probability_actions:        
+            for action, bird in zip(actions, self.birds):
+                if action < self.action_prob:
+                    bird.velocity += self.gravity
+                else:
+                    bird.velocity = self.jump_velocity
+                
+                bird.move()
+
+        else:        
+            for action, bird in zip(actions, self.birds):
+                if action == self.no_action:
+                    bird.velocity += self.gravity
+                elif action == self.jump_action:
+                    bird.velocity = self.jump_velocity
+                
+                bird.move()
 
 
     def move_pipes(self):
