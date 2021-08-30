@@ -33,7 +33,15 @@ class Pipe:
     
     def get_x(self):
         return self.top_rect.point.x
+
+
+    def get_top_boundry(self):
+        return self.top_rect.point.y + self.top_rect.dim.height
     
+
+    def get_bottom_boundry(self):
+        return self.bottom_rect.point.y
+
 
     def __str__(self):
         return f'Pipe[top_rect={self.top_rect}, bottom_rect={self.bottom_rect}]'
