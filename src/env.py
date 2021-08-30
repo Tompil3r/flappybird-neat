@@ -51,10 +51,13 @@ class FlappyBirdEnv:
             self.destroy_pipes()
             self.generate_pipes()
             bird_states, birds_alive = self.update_birds(self.find_next_pipe())
-            return False # done
 
-        else:
-            return True # done
+            if self.done:
+                return bird_states, self.get_birds_score(), birds_alive, True
+            else:
+                return bird_states, None, birds_alive, False
+
+        return None, None, None, True
 
 
     def get_bird_states(self, next_pipe):
