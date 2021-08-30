@@ -6,7 +6,6 @@ class Bird:
         self.velocity = velocity
         self.alive = alive
         self.score = 0
-        self.nn = None
     
 
     def move(self):
