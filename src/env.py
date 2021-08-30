@@ -121,6 +121,7 @@ class FlappyBirdEnv:
     def reset(self):
         self.gui.reset()
         self.birds = self.populate_birds()
+        self.pipes = None
         self.generate_pipes()
         self.birds_alive = self.population > 0
     
