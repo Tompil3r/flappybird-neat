@@ -183,6 +183,8 @@ class FlappyBirdEnv:
         self.pipes = None
         self.generate_pipes()
         self.done = self.population <= 0
+
+        return self.get_bird_states(self.find_next_pipe())
     
 
     def render(self):
