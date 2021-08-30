@@ -4,6 +4,7 @@ from src.bird import Bird
 from src.pipe import Pipe
 from collections import deque
 import random
+import numpy as np
 
 
 
@@ -23,6 +24,8 @@ class FlappyBirdEnv:
         self.action_prob = 0.5
 
         self.nb_actions = 2
+
+        self.bird_states_shape = (population, 7)
 
         self.gravity = 0.098
         self.jump_velocity = -4
@@ -52,6 +55,17 @@ class FlappyBirdEnv:
 
         else:
             return True # done
+
+
+    def get_bird_states(self, next_pipe):
+        bird_states = np.zeros(shape=self.bird_states_shape)
+
+        for idx, bird in enumerate(self.birds):
+            if bird.alive:
+                bird_states[idx] = [bird.circle.point.x, bird.circle.point.y, bird.circle.radius, bird.velocity,
+                next_pipe.get_x(), next_pipe.get_top_boundry(), next_pipe.get_bottom_boundry()]
+
+        return bird_states
 
     
     def sample_action(self):
