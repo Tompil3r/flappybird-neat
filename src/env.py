@@ -82,6 +82,25 @@ class FlappyBirdEnv:
     def get_birds_alive(self):
         return [bird.alive for bird in self.birds]
 
+
+    def update_birds(self, next_pipe):
+        self.birds_alive = False
+        bird_states = np.zeros(shape=self.bird_states_shape)
+        birds_alive = np.zeros(shape=(self.population,), dtype=np.bool)
+
+        for idx, bird in enumerate(self.birds):
+            if not bird.inside(self.rect) or next_pipe.hits_pipe(bird.circle):
+                bird.alive = False
+            else:
+                self.birds_alive = True
+                birds_alive[idx] = True
+                bird.score += 1
+
+                bird_states[idx] = [bird.circle.point.x, bird.circle.point.y, bird.circle.radius, bird.velocity,
+                next_pipe.get_x(), next_pipe.get_top_boundry(), next_pipe.get_bottom_boundry()]
+
+        return bird_states, birds_alive
+            
     
     def sample_action(self):
         return random.randint(0, self.nb_actions - 1)
