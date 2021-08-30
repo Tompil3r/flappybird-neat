@@ -36,7 +36,7 @@ class FlappyBirdEnv:
         self.gap_between_pipes = 400
         self.birds_pipe_gap = 400
 
-        self.birds_alive = None
+        self.done = None
         self.gui_secs_delay = 0.01
 
         self.birds = None
@@ -45,7 +45,7 @@ class FlappyBirdEnv:
     
 
     def step(self, actions, probability_actions=True):
-        if self.birds_alive:
+        if not self.done:
             self.move_birds(actions, probability_actions)
             self.move_pipes()
             self.destroy_pipes()
@@ -84,7 +84,7 @@ class FlappyBirdEnv:
 
 
     def update_birds(self, next_pipe):
-        self.birds_alive = False
+        self.done = True
         bird_states = np.zeros(shape=self.bird_states_shape)
         birds_alive = np.zeros(shape=(self.population,), dtype=np.bool)
 
@@ -92,7 +92,7 @@ class FlappyBirdEnv:
             if not bird.inside(self.rect) or next_pipe.hits_pipe(bird.circle):
                 bird.alive = False
             else:
-                self.birds_alive = True
+                self.done = False
                 birds_alive[idx] = True
                 bird.score += 1
 
@@ -168,13 +168,13 @@ class FlappyBirdEnv:
 
 
     def kill_birds(self, next_pipe):
-        self.birds_alive = False
+        self.done = True
 
         for bird in self.birds:
             if not bird.inside(self.rect) or next_pipe.hits_pipe(bird.circle):
                 bird.alive = False
             else:
-                self.birds_alive = True
+                self.done = False
 
     
     def reset(self):
@@ -182,7 +182,7 @@ class FlappyBirdEnv:
         self.birds = self.populate_birds()
         self.pipes = None
         self.generate_pipes()
-        self.birds_alive = self.population > 0
+        self.done = self.population <= 0
     
 
     def render(self):
