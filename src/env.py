@@ -83,6 +83,10 @@ class FlappyBirdEnv:
         return [bird.alive for bird in self.birds]
 
 
+    def get_birds_score(self):
+        [bird.score for bird in self.birds]
+
+
     def update_birds(self, next_pipe):
         self.done = True
         bird_states = np.zeros(shape=self.bird_states_shape)
