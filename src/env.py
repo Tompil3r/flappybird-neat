@@ -11,7 +11,7 @@ import numpy as np
 
 class FlappyBirdEnv:
 
-    def __init__(self, population):
+    def __init__(self, population, gui_secs_delay=0.01):
         self.population = population
         
         self.rect = Rect(Point(0, 0), Dim(800, 800))
@@ -37,7 +37,7 @@ class FlappyBirdEnv:
         self.birds_pipe_gap = 400
 
         self.done = None
-        self.gui_secs_delay = 0.01
+        self.gui_secs_delay = gui_secs_delay
 
         self.birds = None
         self.pipes = None
