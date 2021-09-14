@@ -11,7 +11,7 @@ env = FlappyBirdEnv(population)
 neat = Neat(env.bird_state_len, 1, population)
 
 callbacks = [
-    GenomeSaving(population, best_only=True),
+    GenomeSaving(population, best_only=True, filenames=['genome.gnc']),
     TimeTermination(0, 30, 0),
     EnvStopper(10_000, differentiate_genomes=True, use_scores=False, alive_fitness=10_000),
     FileLogger('log.csv', population, 5)
