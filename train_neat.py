@@ -1,5 +1,3 @@
-# import sys
-# sys.path.append('../')
 from neat import Neat
 from neat.callbacks import GenomeSaving, TimeTermination, EnvStopper, FileLogger
 from flappybird import FlappyBirdEnv
