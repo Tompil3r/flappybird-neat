@@ -26,6 +26,8 @@ class FlappyBirdEnv:
         self.nb_actions = 2
 
         self.bird_states_shape = (population, 7)
+        self.bird_state_len = 7
+        self.data_normalization = 500
 
         self.gravity = 0.098
         self.jump_velocity = -4
@@ -68,7 +70,7 @@ class FlappyBirdEnv:
                 bird_states[idx] = [bird.circle.point.x, bird.circle.point.y, bird.circle.radius, bird.velocity,
                 next_pipe.get_x(), next_pipe.get_top_boundry(), next_pipe.get_bottom_boundry()]
 
-        return bird_states
+        return (bird_states / self.data_normalization)
 
     
     def add_bird_scores(self):
@@ -96,6 +98,9 @@ class FlappyBirdEnv:
         birds_alive = np.zeros(shape=(self.population,), dtype=np.bool)
 
         for idx, bird in enumerate(self.birds):
+            if not bird.alive:
+                continue
+
             if not bird.inside(self.rect) or next_pipe.hits_pipe(bird.circle):
                 bird.alive = False
             else:
@@ -106,7 +111,7 @@ class FlappyBirdEnv:
                 bird_states[idx] = [bird.circle.point.x, bird.circle.point.y, bird.circle.radius, bird.velocity,
                 next_pipe.get_x(), next_pipe.get_top_boundry(), next_pipe.get_bottom_boundry()]
 
-        return bird_states, birds_alive
+        return (bird_states / self.data_normalization), birds_alive
             
     
     def sample_action(self):
@@ -144,18 +149,18 @@ class FlappyBirdEnv:
     def move_birds(self, actions, probability_actions):
         if probability_actions:        
             for action, bird in zip(actions, self.birds):
-                if action < self.action_prob:
+                if action[0] < self.action_prob:
                     bird.velocity += self.gravity
                 else:
                     bird.velocity = self.jump_velocity
                 
                 bird.move()
-
+            
         else:        
             for action, bird in zip(actions, self.birds):
-                if action == self.no_action:
+                if action[0] == self.no_action:
                     bird.velocity += self.gravity
-                elif action == self.jump_action:
+                elif action[0] == self.jump_action:
                     bird.velocity = self.jump_velocity
                 
                 bird.move()
