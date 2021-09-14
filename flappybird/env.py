@@ -1,7 +1,7 @@
-from src.gui import FlappyBirdGUI
-from src.utils import Point, Dim, Rect, Circle
-from src.bird import Bird
-from src.pipe import Pipe
+from flappybird.gui import FlappyBirdGUI
+from flappybird.utils import Point, Dim, Rect, Circle
+from flappybird.bird import Bird
+from flappybird.pipe import Pipe
 from collections import deque
 import random
 import numpy as np
